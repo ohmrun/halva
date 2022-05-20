@@ -1,0 +1,13 @@
+{
+  "build" : {
+    "-D"   : ["no-deprecation-warnings"],
+    "-cp"  : "src",
+    "-lib" : ["tink_core","stx_pico","stx_nano","stx_fn","stx_log","stx_test","stx_assert","stx_ds","stx_schema","stx_om","fletcher","pml"],
+    "test" : {
+      "-main" : "eu.ohmrun.halva.Test",
+      "interp" : {
+        "--interp" : true
+      }
+    }
+  }
+}
