@@ -1,7 +1,8 @@
 package stx.fail;
 
 enum HalvaFailureSum{
-
+  E_Halva_Top;
+  E_Halva_Frozen;
 }
 abstract HalvaFailure(HalvaFailureSum) from HalvaFailureSum to HalvaFailureSum{
   public function new(self) this = self;

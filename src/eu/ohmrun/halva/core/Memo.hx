@@ -4,7 +4,7 @@ typedef MemoDef<T> = {
   final value   : T;
   final frozen  : Bool;
 }
-@:using(halva.core.Memo.MemoLift)
+@:using(eu.ohmrun.halva.core.Memo.MemoLift)
 abstract Memo<T>(MemoDef<T>) from MemoDef<T> to MemoDef<T>{
   static public var _(default,never) = MemoLift;
   public inline function new(self:MemoDef<T>) this = self;

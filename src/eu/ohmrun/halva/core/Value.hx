@@ -3,9 +3,9 @@ package eu.ohmrun.halva.core;
 enum ValueSum{
   VNil;
   VDecl(d:Decl);
-  VMemo(m:Memo);
+  VMemo(m:Memo<Decl>);
   VRegister(reg:Register);
-  VThreshold(set:RedBlackSet<Memo>);
+  VThreshold(set:RedBlackSet<Memo<Decl>>);
   VEvent(set:RedBlackSet<Decl>);  
   VLambda(name:String,expr:Expr);//TODO ?
 }

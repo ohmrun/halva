@@ -7,8 +7,11 @@ typedef ExprDef                 = eu.ohmrun.halva.core.Expr.ExprDef;
 typedef Value                   = eu.ohmrun.halva.core.Value;
 typedef ValueSum                = eu.ohmrun.halva.core.Value.ValueSum;
 
-typedef Memo                    = eu.ohmrun.halva.core.Memo;
-typedef MemoSum                 = eu.ohmrun.halva.core.Memo.MemoDef;
+typedef Memo<T>                 = eu.ohmrun.halva.core.Memo<T>;
+typedef MemoDef<T>              = eu.ohmrun.halva.core.Memo.MemoDef<T>;
 
 typedef Store<T>                = eu.ohmrun.halva.core.Store<T>;
-typedef StoreSum<T>             = eu.ohmrun.halva.core.Store.StoreDef<T>;
+typedef StoreApi<T>             = eu.ohmrun.halva.core.Store.StoreApi<T>;
+typedef StoreCls<T>             = eu.ohmrun.halva.core.Store.StoreCls<T>;
+
+typedef Register                = eu.ohmrun.halva.core.Register;
