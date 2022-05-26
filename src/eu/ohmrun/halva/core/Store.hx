@@ -2,10 +2,10 @@ package eu.ohmrun.halva.core;
 
 interface StoreApi<T>{
   public function create():Register;
-  public function update(r:Register,?state:Memo<Item<T>>):Void;
+  public function update(r:Register,?state:Memo<Item<T>>):Report<HalvaFailure>;
   public function redeem(r:Register,threshold:ThresholdSet<T>):Future<Memo<Item<T>>>;
   //public function embody(r:Register,threshold:ThresholdSet<T>):Bool;
-  
+  //public function freeze()
    
   public function toStore():Store<T>;
 }
@@ -14,12 +14,19 @@ abstract class StoreCls<T> implements StoreApi<T>{
     return this;
   }
 }
-class FirstStore<T> extends StoreCls<T>{
-  final values : Map<Register,ThresholdSet<T>>;
-  public function new(values){
-    this.values = values;
-  }
-}
+// class FirstStore<T> extends StoreCls<T>{
+//   public final values : Map<Register,ThresholdSet<T>>;
+//   public function new(values){
+//     this.values = values;
+//   }
+//   public function create():Register{
+//     return new Register();
+//   }
+//   public function update(r:Register,?state:Memo<Item<T>>):Report<HalvaFailure>{
+//     final value = 
+//   }
+//   public function redeem(r:Register,threshold:ThresholdSet<T>):Future<Memo<Item<T>>>;
+// }
 @:using(eu.ohmrun.halva.core.Store.StoreLift)
 @:forward abstract Store<T>(StoreApi<T>) from StoreApi<T> to StoreApi<T>{
   static public var _(default,never) = StoreLift;

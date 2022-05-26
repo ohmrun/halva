@@ -9,10 +9,8 @@ abstract Pure<T>(LVarDef<T>) from LVarDef<T> to LVarDef<T>{
     
     this = LVar.lift(__.tran(
       function rec(op:LVarOp<T>){
-        trace(op);
+        __.log().trace(_ -> _.thunk(() -> '$op'));
         return switch(op){
-          case Listen(listener) : 
-            listeners.push(listener);
           case Put(put) :  
             set = set.put(LvNode(put));
             __.log().trace(_ -> _.thunk(() -> '$set'));

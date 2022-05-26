@@ -3,6 +3,7 @@ package stx.fail;
 enum HalvaFailureSum{
   E_Halva_Top;
   E_Halva_Frozen;
+  E_Halva_Malformed;
 }
 abstract HalvaFailure(HalvaFailureSum) from HalvaFailureSum to HalvaFailureSum{
   public function new(self) this = self;

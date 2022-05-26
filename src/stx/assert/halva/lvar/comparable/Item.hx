@@ -2,7 +2,7 @@ package stx.assert.halva.lvar.comparable;
 
 import eu.ohmrun.halva.lvar.Item as TItem;
 
-class Item<T> implements ComparableApi<TItem<T>>{
+class Item<T> extends ComparableCls<TItem<T>>{
   final inner : Comparable<T>;
   public function new(inner){
     this.inner = inner;
