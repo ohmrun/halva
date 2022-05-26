@@ -1,5 +1,8 @@
 package eu.ohmrun.halva;
 
+/**
+  Type recurred with Account allowing closed or open arrays and objects
+**/
 enum JournalSum<T>{
   Record(knuckle:Knuckle,account:Account<Journal<T>>);
   Figure(figure:T);

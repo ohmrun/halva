@@ -1,5 +1,8 @@
 package eu.ohmrun.halva;
 
+/**
+  List-like structure with an option to close `(Bound)`
+**/
 enum AccountSum<T>{
   Spare;
   Extra(v:T,rest:Account<T>);
