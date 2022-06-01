@@ -1,11 +1,8 @@
 package eu.ohmrun.halva;
 
-/**
-  Type recurred with Account allowing closed or open arrays and objects
-**/
 enum JournalSum<T>{
-  Record(knuckle:Knuckle,account:Account<Journal<T>>);
-  Figure(figure:T);
+  Record(knuckle:Knuckle,account:Junction<Account<Journal<T>>>);
+  Figure(figure:LVar<T>);//Figure(TOP) acts as a boundary
 }
 @:using(eu.ohmrun.halva.Journal.JournalLift)
 abstract Journal<T>(JournalSum<T>) from JournalSum<T> to JournalSum<T>{

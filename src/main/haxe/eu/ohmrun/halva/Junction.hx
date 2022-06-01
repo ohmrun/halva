@@ -4,6 +4,7 @@ enum JunctionSum<T>{
   There(r:Register);
   Whole(v:T);
 }
+@:transitive
 @:using(eu.ohmrun.halva.Junction.JunctionLift)
 abstract Junction<T>(JunctionSum<T>) from JunctionSum<T> to JunctionSum<T>{
   static public var _(default,never) = JunctionLift;
@@ -13,6 +14,12 @@ abstract Junction<T>(JunctionSum<T>) from JunctionSum<T> to JunctionSum<T>{
   public function prj():JunctionSum<T> return this;
   private var self(get,never):Junction<T>;
   private function get_self():Junction<T> return lift(this);
+  @:from static public inline function fromRegister<T>(r:Register):Junction<T>{
+    return lift(There(r));
+  }
+  @:from static public inline function fromT<T>(r:T):Junction<T>{
+    return lift(Whole(r));
+  }
 }
 class JunctionLift{
   static public inline function lift<T>(self:JunctionSum<T>):Junction<T>{

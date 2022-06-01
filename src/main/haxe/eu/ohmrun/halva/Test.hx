@@ -14,30 +14,7 @@ class Test{
 }
 class HalvaTest extends TestCase{
   public function test(){
-    final a = Extra
-      (
-        Record(
-          Nominal("a"),
-          Extra(
-            Record(
-              Nominal("a.b"),Extra(Figure(1),Bound)
-            ),
-            Extra(
-              Record(
-                Nominal("a.c"),
-                Extra(Figure(2),Bound)
-              ),
-              Bound
-            )
-        )
-      ),Spare
-    );
-    // final f = (x){
-    //   return switch(x){
-    //     case Record(knuckle) : 
-    //   }
-    // }
-    trace(__.show(a));
+    
   }
 }
 interface HalvishApi<T> extends SemiGroupApi<Halvesque<T>> extends ComparableApi<Halvesque<T>>{
