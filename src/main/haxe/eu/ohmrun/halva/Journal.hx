@@ -1,7 +1,12 @@
 package eu.ohmrun.halva;
 
+class JournalCtr<T> extends Clazz{ 
+  public function Record(knuckle:Knuckle,account:CTR<JunctionCtr<Account<T>>,Junction<Account<T>>>):Journal<T>{
+    return JournalSum.Record(knuckle,account.apply(new JunctionCtr())); 
+  }
+}
 enum JournalSum<T>{
-  Record(knuckle:Knuckle,account:Junction<Account<Journal<T>>>);
+  Record(knuckle:Knuckle,account:Junction<Account<T>>);
   Figure(figure:LVar<T>);//Figure(TOP) acts as a boundary
 }
 @:using(eu.ohmrun.halva.Journal.JournalLift)

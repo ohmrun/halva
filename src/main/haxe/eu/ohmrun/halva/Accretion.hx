@@ -6,6 +6,11 @@ interface AccretionApi<T>{
   private final _signal : SignalTrigger<Couple<Register,Account<T>>>;
   private final signal  : Signal<Couple<Register,Account<T>>>;
 
+  public function create():Register;
+  public function update(r:Register,data:Account<T>):Void;
+  public function redeem(r:Register,threshold:ThresholdSet<T>):Future<Account<T>>;
+  public function listen(r:Register,threshold:ThresholdSet<T>):Signal<Account<T>>;
+  
   public function toAccretion():Accretion<T>;
 }
 class AccretionCls<T> implements AccretionApi<T>{

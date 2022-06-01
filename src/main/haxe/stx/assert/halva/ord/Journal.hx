@@ -12,7 +12,7 @@ class Journal<T> extends OrdCls<TJournal<T>>{
       case [Record(knuckleI,accountI),Record(knuckleII,accountII)] : 
         var ord = new stx.assert.halva.ord.Knuckle().comply(knuckleI,knuckleII);
         if(ord.is_not_less_than()){
-          ord = new stx.assert.halva.ord.Junction(new stx.assert.halva.ord.Account(this)).comply(accountI,accountII);
+          ord = new stx.assert.halva.ord.Junction(new stx.assert.halva.ord.Account(inner)).comply(accountI,accountII);
         }    
         ord;
       case [Figure(figureI),Figure(figureII)] :

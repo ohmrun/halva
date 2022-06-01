@@ -1,7 +1,7 @@
 {
   "build" : {
     "-D"   : ["no-deprecation-warnings"],
-    "-cp"  : "src",
+    "-cp"  : "src/main/haxe",
     "-lib" : ["tink_core","stx_pico","stx_nano","stx_show","stx_fn","stx_log","stx_test","stx_assert","stx_ds","stx_om","fletcher","pml"],
     "test" : {
       "-main" : "eu.ohmrun.halva.Test",
@@ -12,7 +12,8 @@
     "unit" : {
       "--macro" : [
         "include('eu.ohmrun.Halva',true)",
-        "include('eu.ohmrun.halva',true)"
+        "include('eu.ohmrun.halva',true)",
+        "include('stx.assert.halva',true)"
       ],
       "-main" : "Unit"
     }

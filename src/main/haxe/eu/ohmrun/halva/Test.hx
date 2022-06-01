@@ -14,7 +14,15 @@ class Test{
 }
 class HalvaTest extends TestCase{
   public function test(){
-    
+    final h   = __.halva();
+    final a   = h.account().Make;
+    final tup = a(
+      j -> j.Record(1,jnc -> jnc.Account(a -> a.Bottom())),
+      a(
+        j -> j.Record(2,jnc -> jnc.Account(a -> a.Bottom())),
+        acc -> acc.Top()
+      )
+    );
   }
 }
 interface HalvishApi<T> extends SemiGroupApi<Halvesque<T>> extends ComparableApi<Halvesque<T>>{

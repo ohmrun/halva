@@ -1,5 +1,16 @@
 package eu.ohmrun.halva;
 
+class JunctionCtr<T> extends Clazz{
+  public function At(v:Register):Junction<T>{
+    return Junction.fromRegister(v);
+  }
+  public function Of<I>(v:APP<I,T>):Junction<T>{
+    return Junction.fromT(v.reply());
+  }
+  public function Account(v:CTR<AccountCtr<T>,Account<T>>):Junction<Account<T>>{
+    return Junction.fromT(v.apply(new AccountCtr()));
+  }
+}
 enum JunctionSum<T>{
   There(r:Register);
   Whole(v:T);

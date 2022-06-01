@@ -12,7 +12,7 @@ class Journal<T> extends EqCls<TJournal<T>>{
       case [Record(knuckleI,accountI),Record(knuckleII,accountII)] : 
         var eq = new stx.assert.halva.eq.Knuckle().comply(knuckleI,knuckleII);
         if(eq.is_equal()){
-          eq = new stx.assert.halva.eq.Junction(new stx.assert.halva.eq.Account(this)).comply(accountI,accountII);
+          eq = new stx.assert.halva.eq.Junction(new stx.assert.halva.eq.Account(inner)).comply(accountI,accountII);
         }    
         eq;
       case [Figure(figureI),Figure(figureII)] :
