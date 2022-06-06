@@ -2,7 +2,7 @@
   "build" : {
     "-D"   : ["no-deprecation-warnings"],
     "-cp"  : "src/main/haxe",
-    "-lib" : ["tink_core","stx_pico","stx_nano","stx_show","stx_fn","stx_log","stx_test","stx_assert","stx_ds","stx_om","fletcher","pml"],
+    "-lib" : ["tink_core","stx_pico","stx_nano","stx_show","stx_fn","stx_log","stx_test","stx_assert","stx_ds","stx_xset","stx_om","fletcher","pml"],
     "test" : {
       "-main" : "eu.ohmrun.halva.Test",
       "interp" : {

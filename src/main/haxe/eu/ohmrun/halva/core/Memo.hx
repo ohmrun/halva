@@ -13,6 +13,16 @@ typedef MemoDef<T> = {
   public function prj():MemoDef<T> return this;
   private var self(get,never):Memo<T>;
   private function get_self():Memo<T> return lift(this);
+  
+  @:noUsing static public function make<T>(value:T,frozen:Bool){
+    return new Memo({ value : value, frozen : frozen });
+  }
+  @:noUsing static public function pure(v:T){
+    return make(v,false);
+  }
+  public function freeze(){
+    return make(this.value,true);
+  }
 }
 class MemoLift{
   static public inline function lift<T>(self:MemoDef<T>):Memo<T>{

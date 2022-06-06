@@ -1,23 +1,23 @@
 package eu.ohmrun.halva;
 
 interface AccretionApi<T>{
-  private final with    : Monoid<Account<T>>;
-  private var   data    : RedBlackMap<Register,Account<T>>;
-  private final _signal : SignalTrigger<Couple<Register,Account<T>>>;
-  private final signal  : Signal<Couple<Register,Account<T>>>;
+  private final with    : Monoid<Memo<LVar<T>>>;
+  private var   data    : RedBlackMap<Register,Memo<LVar<T>>>;
+  private final _signal : SignalTrigger<Couple<Register,Memo<LVar<T>>>>;
+  private final signal  : Signal<Couple<Register,Memo<LVar<T>>>>;
 
   public function create():Register;
-  public function update(r:Register,data:Account<T>):Void;
-  public function redeem(r:Register,threshold:ThresholdSet<T>):Future<Account<T>>;
-  public function listen(r:Register,threshold:ThresholdSet<T>):Signal<Account<T>>;
+  public function update(r:Register,data:Memo<LVar<T>>):Void;
+  public function redeem(r:Register,threshold:ThresholdSet<T>):Future<Memo<LVar<T>>>;
+  public function listen(r:Register,threshold:ThresholdSet<T>):Signal<Memo<LVar<T>>>;
   
   public function toAccretion():Accretion<T>;
 }
 class AccretionCls<T> implements AccretionApi<T>{
-  final with              : Monoid<Account<T>>;
-  var data                : RedBlackMap<Register,Account<T>>;
-  private final _signal   : SignalTrigger<Couple<Register,Account<T>>>;
-  private final signal    : Signal<Couple<Register,Account<T>>>;
+  final with              : Monoid<Memo<LVar<T>>>;
+  var data                : RedBlackMap<Register,Memo<LVar<T>>>;
+  private final _signal   : SignalTrigger<Couple<Register,Memo<LVar<T>>>>;
+  private final signal    : Signal<Couple<Register,Memo<LVar<T>>>>;
 
   public function new(with,data){
     this.with       = with;
@@ -30,31 +30,31 @@ class AccretionCls<T> implements AccretionApi<T>{
   }
   public function create():Register{
     final reg = new Register();
-    this.data = this.data.set(reg,Account.unit());
+    this.data = this.data.set(reg,LVar.unit());
     return reg;
   }
-  public function update(r:Register,data:Account<T>):Void{
-    final next  = this.with.plus(this.data.get(r).defv(Account.unit()),data);
+  public function update(r:Register,data:Memo<LVar<T>>):Void{
+    final next  = this.with.plus(this.data.get(r).defv(LVar.unit()),data);
     this.data   = this.data.set(r,next);
     _signal.trigger(__.couple(r,next));
   }
-  public function redeem(r:Register,threshold:ThresholdSet<T>):Future<Account<T>>{
-    final next = this.data.get(r).defv(Account.unit());
+  public function redeem(r:Register,threshold:ThresholdSet<T>):Future<Memo<LVar<T>>>{
+    final next = this.data.get(r).defv(LVar.unit());
     return filter(next,threshold).if_else(
       () -> Future.irreversible(cb -> cb(next)),
       () -> listen(r,threshold).nextTime(_ -> true)
     );
   }
-  public function listen(r:Register,threshold:ThresholdSet<T>):Signal<Account<T>>{
+  public function listen(r:Register,threshold:ThresholdSet<T>):Signal<Memo<LVar<T>>>{
     return signal.filter(
       __.decouple(
         (x,y) -> (x == r) && filter(y,threshold)
       )
     ).map(__.decouple((_,y) -> y));
   }
-  static private function filter<T>(item:Account<T>,threshold:ThresholdSet<T>){
+  static private function filter<T>(item:Memo<LVar<T>>,threshold:ThresholdSet<T>){
     return threshold.toIter().lfold(
-      (next:Account<T>,m:Bool) -> m.if_else(
+      (next:Memo<LVar<T>>,m:Bool) -> m.if_else(
         () -> threshold.with.lt().comply(item,next).is_not_less_than() || threshold.with.eq().comply(item,next).is_equal(),
         () -> false
       ),
@@ -68,7 +68,7 @@ class AccretionCls<T> implements AccretionApi<T>{
   public inline function new(self:AccretionApi<T>) this = self;
   @:noUsing static inline public function lift<T>(self:AccretionApi<T>):Accretion<T> return new Accretion(self);
   @:noUsing static public function unit<T>(){
-    return Ref.to(RedBlackMap.make(Comparable.Anon(Eq.Anon(Register._.equals),Ord.Anon(Register._.less_than))));
+    return Ref.to(RedBlackMap.make(Comparable.Anon(Eq.Register(),Ord.Register())));
   }
   public function prj():AccretionApi<T> return this;
   private var self(get,never):Accretion<T>;

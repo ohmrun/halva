@@ -10,9 +10,9 @@ class Journal<T> extends EqCls<TJournal<T>>{
   public function comply(lhs:TJournal<T>,rhs:TJournal<T>){
     return switch([lhs,rhs]){
       case [Record(knuckleI,accountI),Record(knuckleII,accountII)] : 
-        var eq = new stx.assert.halva.eq.Knuckle().comply(knuckleI,knuckleII);
+        var eq = new stx.assert.eq.term.Knuckle().comply(knuckleI,knuckleII);
         if(eq.is_equal()){
-          eq = new stx.assert.halva.eq.Junction(new stx.assert.halva.eq.Account(inner)).comply(accountI,accountII);
+          eq = new stx.assert.eq.term.Junction(new stx.assert.halva.eq.Account(inner)).comply(accountI,accountII);
         }    
         eq;
       case [Figure(figureI),Figure(figureII)] :

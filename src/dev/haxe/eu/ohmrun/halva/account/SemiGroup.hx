@@ -1,6 +1,6 @@
 package eu.ohmrun.halva.account;
 
-class Monoid<T> implements SemiGroupApi<Account<T>>{
+class SemiGroup<T> implements SemiGroupApi<Account<T>>{
   final with : Comparable<T>;
   public function new(with){
     this.with = with;
