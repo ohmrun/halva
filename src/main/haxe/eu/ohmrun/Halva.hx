@@ -14,6 +14,7 @@ typedef HalvaFailureSum 	              = stx.fail.HalvaFailure.HalvaFailureSum;
 
 typedef Accretion<T> 			              = eu.ohmrun.halva.Accretion<T>;
 typedef AccretionApi<T> 	              = eu.ohmrun.halva.Accretion.AccretionApi<T>;
+typedef AccretionCls<T> 	              = eu.ohmrun.halva.Accretion.AccretionCls<T>;
 
 // typedef Journal<T> 			                = eu.ohmrun.halva.Journal<T>;
 // typedef JournalSum<T> 	                = eu.ohmrun.halva.Journal.JournalSum<T>;
@@ -32,8 +33,8 @@ typedef AccretionApi<T> 	              = eu.ohmrun.halva.Accretion.AccretionApi<
 // typedef EvaluationContext 			      = eu.ohmrun.halva.EvaluationContext;
 // typedef EvaluationContextDef 	      = eu.ohmrun.halva.EvaluationContext.EvaluationContextDef;
 
-//typedef LVarDef<T>                      = eu.ohmrun.halva.LVar.LVarDef<T>;
-// typedef LVar<T>                        = eu.ohmrun.halva.LVar<T>;
+typedef LVarSum<T>                      = eu.ohmrun.halva.LVar.LVarSum<T>;
+typedef LVar<T>                        = eu.ohmrun.halva.LVar<T>;
 
 //typedef LVarOp<T>                       = eu.ohmrun.halva.LVarOp<T>;
 //typedef ActivationSet<T>                = eu.ohmrun.halva.ActivationSet<T>;

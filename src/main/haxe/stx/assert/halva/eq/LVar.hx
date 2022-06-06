@@ -10,7 +10,12 @@ class LVar<T> extends EqCls<TLVar<T>>{
   public function comply(lhs:TLVar<T>,rhs:TLVar<T>){
     return switch([lhs,rhs]){
       case [BOT,BOT]                            : AreEqual;
-      case [HAS(vI),HAS(vII)]                   : inner.comply(vI,vII);
+      case [HAS(vI,bI),HAS(vII,bII)]            : 
+        var eq = Eq.Bool().comply(bI,bII);
+        if(eq.is_equal()){
+          eq = inner.comply(vI,vII);
+        }
+        eq;
       case [TOP,TOP]                            : AreEqual;
       case [x,y]                                : Eq.EnumValueIndex().comply(x,y);
     }

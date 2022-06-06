@@ -11,7 +11,7 @@ class Memo<T> extends EqCls<TMemo<T>>{
     return switch([lhs.frozen,rhs.frozen]){
       case [true,true] | [false,false]          : 
         inner.comply(lhs.value,rhs.value);
-      default                                   : AreNotEqual;
+      default                                   : NotEqual;
     }
   }
 }
