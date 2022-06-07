@@ -1,16 +1,13 @@
 package eu.ohmrun.halva;
 
 interface AccretionApi<T>{
-  public final lub         : SemiGroup<LVar<T>>;
-  public final comparable  : Comparable<LVar<T>>;
-
-  private var   data        : RedBlackMap<Register,LVar<T>>;
+  public final satisfies          : SatisfiesApi<T>;
 
   private final _signal : SignalTrigger<Couple<Register,LVar<T>>>;
   private final signal  : Signal<Couple<Register,LVar<T>>>;
 
   public function create():Register;
-  public function update(r:Register,data:LVar<T>):Void;
+  public function update(r:Register,data:LVar<T>):Bool;
   public function redeem(r:Register,threshold:ThresholdSet<T>):Future<LVar<T>>;
   public function listen(r:Register,threshold:ThresholdSet<T>):Signal<LVar<T>>;
   
@@ -18,17 +15,14 @@ interface AccretionApi<T>{
 }
 class AccretionCls<T> implements AccretionApi<T>{
 
-  public final lub                : SemiGroup<LVar<T>>;
-  public final comparable         : Comparable<LVar<T>>;
-
-  var data                : RedBlackMap<Register,LVar<T>>;
+  public final satisfies          : SatisfiesApi<T>;
+  var data                        : RedBlackMap<Register,LVar<T>>;
 
   private final _signal   : SignalTrigger<Couple<Register,LVar<T>>>;
   private final signal    : Signal<Couple<Register,LVar<T>>>;
 
-  public function new(lub,comparable,data){
-    this.lub              = lub;
-    this.comparable       = comparable;
+  public function new(satisfies,data){
+    this.satisfies        = satisfies;
     this.data             = data;
     this._signal          = Signal.trigger();
     this.signal           = _signal.asSignal();
@@ -41,20 +35,32 @@ class AccretionCls<T> implements AccretionApi<T>{
     this.data = this.data.set(reg,LVar.unit());
     return reg;
   }
-  public function update(r:Register,data:LVar<T>):Void{
-    final last  = this.data.get(r).defv(LVar.unit());
-    final next  = this.lub.plus(last,data);
+  public function update(r:Register,data:LVar<T>):Bool{
+    final last        = this.data.get(r).defv(LVar.unit());
+    trace('update on $last');
+    final next        = this.satisfies.lub().plus(last,data);
+    //__.log().debug(_ -> _.thunk(() -> '$next'));
+    var updated       = false;
+    final comparable  = this.satisfies.toComparable();
     if(next != TOP){
-      if(this.comparable.eq().comply(last,next).is_equal() || this.comparable.lt().comply(last,next).is_less_than()){
+      trace('comparing $last and $next');
+      if(comparable.eq().comply(last,next).is_equal() || comparable.lt().comply(last,next).is_less_than()){
         this.data   = this.data.set(r,next);
+        trace('data now ${this.data}');
         _signal.trigger(__.couple(r,next));
+        updated = true;
       }
     }
+    trace('updated? $updated to $next');
+    return updated;
   }
   public function redeem(r:Register,threshold:ThresholdSet<T>):Future<LVar<T>>{
     final next = this.data.get(r).defv(LVar.unit());
-    return filter(next,threshold).if_else(
-      () -> Future.irreversible(cb -> cb(next)),
+    __.log().trace('$next');
+    final ok   = filter(next,threshold);
+    __.log().trace('$ok');
+    return ok.if_else(
+      () -> Future.sync(next),
       () -> listen(r,threshold).nextTime(_ -> true)
     );
   }
@@ -81,8 +87,13 @@ class AccretionCls<T> implements AccretionApi<T>{
   public inline function new(self:AccretionApi<T>) this = self;
   @:noUsing static inline public function lift<T>(self:AccretionApi<T>):Accretion<T> return new Accretion(self);
   
-  @:noUsing static public function make<T>(lub:SemiGroup<LVar<T>>,comparable,data:RedBlackMap<Register,LVar<T>>){
-    return lift(new AccretionCls(lub,comparable,data));
+  @:noUsing static public function make<T>(satisfies:SatisfiesApi<T>,data:RedBlackMap<Register,LVar<T>>){
+    return lift(new AccretionCls(satisfies,data));
+  }
+  @:noUsing static public function makeI<T>(satisfies:SatisfiesApi<T>){
+    //data:RedBlackMap<Register,LVar<T>>
+    final data = RedBlackMap.make(Comparable.Register());
+    return lift(new AccretionCls(satisfies,data));
   }
   public function prj():AccretionApi<T> return this;
   private var self(get,never):Accretion<T>;

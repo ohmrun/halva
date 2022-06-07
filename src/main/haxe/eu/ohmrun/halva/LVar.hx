@@ -80,5 +80,12 @@ class LVarLift{
       case TOP          : TOP;
     }
   }
-
+  static public function is_defined<T>(self:LVarSum<T>){
+    return fold(
+      self,
+      ()    -> false,
+      (_,_) -> true,
+      ()    -> false
+    );
+  }
 } 
