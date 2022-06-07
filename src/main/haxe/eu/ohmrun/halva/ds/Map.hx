@@ -19,7 +19,7 @@ class Map<K,V>{
     final default_threshold = RedBlackSet.make(accretion.satisfies.toComparable());
     return this.accretion.redeem(id,default_threshold).map(
       (lvar) -> {
-        trace('redeemed $lvar on $key before set');
+        //trace('redeemed $lvar on $key before set');
         final changed = this.accretion.update(
           this.id,
           switch(lvar){
@@ -27,7 +27,7 @@ class Map<K,V>{
             default   : lvar.map(x -> x.set(key,val)); 
           }
         );
-        trace(changed);
+        //trace(changed);
         return __.report();
       }
     );
