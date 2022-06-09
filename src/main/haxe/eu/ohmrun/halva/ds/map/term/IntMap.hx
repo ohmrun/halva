@@ -11,7 +11,7 @@ class IntMap<V> extends eu.ohmrun.halva.ds.Map<Int,V>{
     );
   }
 }
-private class IntMapSatisfies<V> extends SatisfiesCls<RedBlackMap<String,V>>{
+private class IntMapSatisfies<V> extends SatisfiesCls<RedBlackMap<Int,V>>{
   final V : Comparable<V>;
   public function new(V){
     this.V = V;

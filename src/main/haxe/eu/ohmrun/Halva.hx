@@ -34,7 +34,12 @@ typedef AccretionCls<T> 	              = eu.ohmrun.halva.Accretion.AccretionCls<
 // typedef EvaluationContextDef 	      = eu.ohmrun.halva.EvaluationContext.EvaluationContextDef;
 
 typedef LVarSum<T>                      = eu.ohmrun.halva.LVar.LVarSum<T>;
-typedef LVar<T>                        = eu.ohmrun.halva.LVar<T>;
+typedef LVar<T>                         = eu.ohmrun.halva.LVar<T>;
+
+
+typedef ThresholdSet<T>                 = eu.ohmrun.halva.ThresholdSet<T>;
+typedef ThresholdSets                   = eu.ohmrun.halva.ThresholdSet.ThresholdSets;
+
 
 //typedef LVarOp<T>                       = eu.ohmrun.halva.LVarOp<T>;
 //typedef ActivationSet<T>                = eu.ohmrun.halva.ActivationSet<T>;

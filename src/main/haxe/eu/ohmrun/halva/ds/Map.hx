@@ -7,12 +7,12 @@ class Map<K,V>{
   //whatever rules you make about Ord Eq here plays in lub, which is only put if the result >= previous and not TOP 
   //public final threshold      : ThresholdSet<RedBlackMap<K,V>>;
   
-  public function new(accretion,unit){
+  public function new(accretion:Accretion<RedBlackMap<K,V>>,unit){
     this.accretion      = accretion; 
     this.id             = accretion.create(); 
     this.unit           = unit;
   }
-  static public function make(accretion,unit){
+  static public function make<K,V>(accretion:Accretion<RedBlackMap<K,V>>,unit:RedBlackMap<K,V>){
     return new Map(accretion,unit);
   }
   public function set(key:K,val:V):Alert<HalvaFailure>{
@@ -28,7 +28,7 @@ class Map<K,V>{
           }
         );
         //trace(changed);
-        return __.report();
+        return changed ? __.report(f -> f.of(E_Halva_Top)) : __.report();
       }
     );
   }

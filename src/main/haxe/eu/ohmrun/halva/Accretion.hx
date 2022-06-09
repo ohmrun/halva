@@ -3,8 +3,8 @@ package eu.ohmrun.halva;
 interface AccretionApi<T>{
   public final satisfies          : SatisfiesApi<T>;
 
-  private final _signal : SignalTrigger<Couple<Register,LVar<T>>>;
-  private final signal  : Signal<Couple<Register,LVar<T>>>;
+  private final _signal           : SignalTrigger<Couple<Register,LVar<T>>>;
+  private final signal            : Signal<Couple<Register,LVar<T>>>;
 
   public function create():Register;
   public function update(r:Register,data:LVar<T>):Bool;
