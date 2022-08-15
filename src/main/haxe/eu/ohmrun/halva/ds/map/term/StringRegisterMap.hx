@@ -1,6 +1,6 @@
 package eu.ohmrun.halva.ds.map.term;
 
-class StringRegisterMap<V> extends eu.ohmrun.halva.ds.Map<String,Register>{
+class StringRegisterMap extends eu.ohmrun.halva.ds.Map<String,Register>{
   static public function make(){
     final satisfies = new StringRegisterMapSatisfies();
     final unit      = RedBlackMap.make(Comparable.String());

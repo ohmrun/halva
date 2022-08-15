@@ -37,21 +37,21 @@ class AccretionCls<T> implements AccretionApi<T>{
   }
   public function update(r:Register,data:LVar<T>):Bool{
     final last        = this.data.get(r).defv(LVar.unit());
-    trace('update on $last');
+    __.log().trace('update on $last');
     final next        = this.satisfies.lub().plus(last,data);
     //__.log().debug(_ -> _.thunk(() -> '$next'));
     var updated       = false;
     final comparable  = this.satisfies.toComparable();
     if(next != TOP){
-      trace('comparing $last and $next');
+      __.log().trace('comparing $last and $next');
       if(comparable.eq().comply(last,next).is_equal() || comparable.lt().comply(last,next).is_less_than()){
         this.data   = this.data.set(r,next);
-        trace('data now ${this.data}');
+        __.log().trace('data now ${this.data}');
         _signal.trigger(__.couple(r,next));
         updated = true;
       }
     }
-    trace('updated? $updated to $next');
+    __.log().trace('updated? $updated to $next');
     return updated;
   }
   public function redeem(r:Register,threshold:ThresholdSet<T>):Future<LVar<T>>{
@@ -103,7 +103,4 @@ class AccretionLift{
   static public inline function lift<T>(self:AccretionApi<T>):Accretion<T>{
     return Accretion.lift(self);
   }
-  // static public function latest<T>(self:AccretionApi<T>):Future<T>{
-
-  // }
 } 
