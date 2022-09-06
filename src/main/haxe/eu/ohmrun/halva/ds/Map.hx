@@ -23,8 +23,10 @@ class Map<K,V>{
         final changed = this.accretion.update(
           this.id,
           switch(lvar){
-            case BOT  : HAS(unit.set(key,val),false);
-            default   : lvar.map(x -> x.set(key,val)); 
+            case Some(BOT) | None         : HAS(unit.set(key,val),false);
+            case Some(HAS(x,false))       : HAS(x.set(key,val),false);
+            case Some(HAS(x,true))        : HAS(x,true);
+            case Some(TOP)                : TOP;
           }
         );
         //trace(changed);
@@ -35,10 +37,13 @@ class Map<K,V>{
   public function get(key:K,?threshold:ThresholdSet<RedBlackMap<K,V>>):Future<Option<V>>{
     final default_threshold = RedBlackSet.make(accretion.satisfies.toComparable());
     return accretion.redeem(id,__.option(threshold).defv(default_threshold)).map(
-      (lvar) -> lvar.fold(
-        ()    -> None,
-        (x,_) -> x.get(key),
-        ()    -> None
+      (opt) -> opt.fold(
+        (lvar) -> lvar.fold(
+          ()    -> None,
+          (x,_) -> x.get(key),
+          ()    -> None
+        ),
+        () -> None
       )
     );
   }

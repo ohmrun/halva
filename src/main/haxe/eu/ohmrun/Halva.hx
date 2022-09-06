@@ -40,9 +40,9 @@ typedef LVar<T>                         = eu.ohmrun.halva.LVar<T>;
 typedef ThresholdSet<T>                 = eu.ohmrun.halva.ThresholdSet<T>;
 typedef ThresholdSets                   = eu.ohmrun.halva.ThresholdSet.ThresholdSets;
 
-typedef StockApi<K,V>                   = eu.ohmrun.halva.Stock.StockApi<K,V>;
-typedef StockCls<K,V>                   = eu.ohmrun.halva.Stock.StockCls<K,V>;
-typedef Stock<K,V>                      = eu.ohmrun.halva.Stock.StockCls<K,V>;
+typedef AggregationApi<K,V>                   = eu.ohmrun.halva.Aggregation.AggregationApi<K,V>;
+typedef AggregationCls<K,V>                   = eu.ohmrun.halva.Aggregation.AggregationCls<K,V>;
+typedef Aggregation<K,V>                      = eu.ohmrun.halva.Aggregation.AggregationCls<K,V>;
 
 
 //typedef LVarOp<T>                       = eu.ohmrun.halva.LVarOp<T>;
