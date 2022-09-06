@@ -14,7 +14,7 @@ abstract LVar<T>(LVarSum<T>) from LVarSum<T> to LVarSum<T>{
   @:noUsing static inline public function unit<T>():LVar<T>{ return lift(BOT); }
   @:noUsing static inline public function pure<T>(v:T):LVar<T>{ return lift(HAS(v,false)); }
   public function prj():LVarSum<T> return this;
-  private var self(get,never):LVar<T>;
+  public var self(get,never):LVar<T>;
   private function get_self():LVar<T> return lift(this);
 
   public var frozen(get,never):Bool;

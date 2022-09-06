@@ -8,7 +8,7 @@ interface AccretionApi<T>{
 
   public function create():Register;
   public function update(r:Register,data:LVar<T>):Bool;
-  public function redeem(r:Register,threshold:ThresholdSet<T>):Future<LVar<T>>;
+  public function redeem(r:Register,threshold:ThresholdSet<T>):Future<Option<LVar<T>>>;
   public function listen(r:Register,threshold:ThresholdSet<T>):Signal<LVar<T>>;
   
   public function toAccretion():Accretion<T>;
@@ -54,14 +54,16 @@ class AccretionCls<T> implements AccretionApi<T>{
     __.log().trace('updated? $updated to $next');
     return updated;
   }
-  public function redeem(r:Register,threshold:ThresholdSet<T>):Future<LVar<T>>{
-    final next = this.data.get(r).defv(LVar.unit());
+  public function redeem(r:Register,threshold:ThresholdSet<T>):Future<Option<LVar<T>>>{
+    final next : Option<LVar<T>> = this.data.get(r).map(Some).defv(None);
     __.log().trace('$next');
-    final ok   = filter(next,threshold);
+    final ok   = next.map(
+      x -> filter(x,threshold)
+    ).defv(false);
     __.log().trace('$ok');
     return ok.if_else(
-      () -> Future.sync(next),
-      () -> listen(r,threshold).nextTime(_ -> true)
+      () -> Future.irreversible((cb) -> cb(next)),
+      () -> listen(r,threshold).nextTime(_ -> true).map(Some)
     );
   }
   public function listen(r:Register,threshold:ThresholdSet<T>):Signal<LVar<T>>{

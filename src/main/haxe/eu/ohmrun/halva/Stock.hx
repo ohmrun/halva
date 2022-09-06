@@ -2,13 +2,20 @@ package eu.ohmrun.halva;
 
 interface StockApi<K,V> extends AccretionApi<V>{
   public function bestow(k:K,v:V):Bool;
-  public function obtain(k:K,threshold:ThresholdSet<V>):Future<LVar<V>>;
+  public function obtain(k:K,threshold:ThresholdSet<V>):Future<Option<LVar<V>>>;
+  public function exists(k:K):Bool;
 }
 class StockCls<K,V> extends AccretionCls<V> implements StockApi<K,V>{
-  final internal : Map<K,Register>;
+  //final cache    : RedBlackSet.
+  final internal : haxe.ds.Map<K,Register>;
   public function new(satisfies,data,internal:Map<K,Register>){
     super(satisfies,data);
     this.internal = internal;
+  }
+  override public function create():Register{
+    final register = super.create();
+    this.update(register,BOT);
+    return register;
   }
   public function bestow(k:K,v:V):Bool{
     var register = internal.get(k);
@@ -25,12 +32,15 @@ class StockCls<K,V> extends AccretionCls<V> implements StockApi<K,V>{
       }
     );
   }
-  public function obtain(k:K,threshold:ThresholdSet<V>):Future<LVar<V>>{
+  public function obtain(k:K,threshold:ThresholdSet<V>):Future<Option<LVar<V>>>{
     final register = internal.get(k);
     return if(register == null){
-      Future.sync(BOT);
+      Future.irreversible((cb) -> cb(None));
     }else{
       this.redeem(register,threshold);
     }
+  }
+  public function exists(k:K):Bool{
+    return this.internal.exists(k);
   }
 }

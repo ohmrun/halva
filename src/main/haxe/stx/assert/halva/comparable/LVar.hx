@@ -2,6 +2,7 @@ package stx.assert.halva.comparable;
 
 import eu.ohmrun.halva.LVar in TLVar;
 
+//TODO this is Chunk<T,E>
 class LVar<T> extends ComparableCls<TLVar<T>>{
   public final inner : Comparable<T>;
   public function new(inner){
