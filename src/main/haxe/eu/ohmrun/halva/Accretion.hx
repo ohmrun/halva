@@ -18,8 +18,8 @@ class AccretionCls<T> implements AccretionApi<T>{
   public final satisfies          : SatisfiesApi<T>;
   var data                        : RedBlackMap<Register,LVar<T>>;
 
-  private final _signal   : SignalTrigger<Couple<Register,LVar<T>>>;
-  private final signal    : Signal<Couple<Register,LVar<T>>>;
+  private final _signal           : SignalTrigger<Couple<Register,LVar<T>>>;
+  private final signal            : Signal<Couple<Register,LVar<T>>>;
 
   public function new(satisfies,data){
     this.satisfies        = satisfies;

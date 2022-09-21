@@ -4,6 +4,8 @@ interface AggregationApi<K,V>{
   public function bestow(k:K,v:LVar<V>):Bool;
   public function obtain(k:K):Future<Option<LVar<V>>>;
   public function exists(k:K):Bool;
+  public function assume(k:K):Bool;
+  public function values():Iterable<K>;
 }
 class AggregationCls<K,V> implements AggregationApi<K,V>{
   final accretion   : Accretion<V>;
@@ -13,6 +15,9 @@ class AggregationCls<K,V> implements AggregationApi<K,V>{
     this.accretion = new AccretionCls(satisfies,data);
     this.internal = internal;
     this.history  = new haxe.ds.Map();
+  }
+  public function assume(k:K):Bool{
+    return this.bestow(k,BOT);
   }
   public function bestow(k:K,v:LVar<V>):Bool{
     var register = internal.get(k);
@@ -55,5 +60,21 @@ class AggregationCls<K,V> implements AggregationApi<K,V>{
   }
   public function exists(k:K):Bool{
     return this.internal.exists(k);
+  }
+  public function values():Iterable<K>{
+    return {
+      iterator : () -> {
+        final iter = internal.keyValueIterator();
+        return {
+          next : () -> {
+            final kv = iter.next();
+            return kv.key; 
+          },
+          hasNext : () -> {
+            return iter.hasNext();
+          }
+        }
+      }
+    }
   }
 }
