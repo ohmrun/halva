@@ -14,7 +14,6 @@
     "version": "0.3.0",
     "url": "https://github.com/ohmrun/halva",
     "dependencies": {
-        "hx3compat": "1.0.3",
 
         "tink_core"     : "git:https://github.com/haxetink/tink_core.git",
         "stx_pico"      : "git:https://github.com/ohmrun/stx_pico.git",
