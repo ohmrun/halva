@@ -1,5 +1,7 @@
 package eu.ohmrun.halva;
 
+import eu.ohmrun.halva.Core;
+
 interface AccretionApi<T>{
   public final satisfies          : SatisfiesApi<T>;
 
