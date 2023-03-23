@@ -1,5 +1,7 @@
 package eu.ohmrun.halva;
 
+import eu.ohmrun.halva.Core;
+
 interface AggregationApi<K,V>{
   public function bestow(k:K,v:LVar<V>):Bool;
   public function obtain(k:K):Future<Option<LVar<V>>>;
