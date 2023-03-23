@@ -1,5 +1,7 @@
 package eu.ohmrun;
 
+using stx.Nano;
+
 class Halva{
   static public function halva(wildcard:Wildcard){
     return new eu.ohmrun.halva.Module();

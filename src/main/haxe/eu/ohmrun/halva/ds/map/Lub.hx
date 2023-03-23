@@ -19,7 +19,7 @@ class Lub<K,V> extends SemiGroupCls<LVar<RedBlackMap<K,V>>>{
             var fail        = false;
             final do_fail   = () -> fail = true;
   
-            for(tp in both){
+            for(tp in both.toIterKV().toIter()){
               var k = tp.key;
               var v = tp.val;
   
