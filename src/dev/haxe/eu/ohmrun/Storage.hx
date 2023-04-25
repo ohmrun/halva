@@ -1,6 +1,6 @@
 package eu.ohmrun.halva;
 
-typedef StorageDef<T> = Res<Accretion<T>,HalvaFailure>;
+typedef StorageDef<T> = Upshot<Accretion<T>,HalvaFailure>;
 
 @:using(eu.ohmrun.halva.Storage.StorageLift)
 abstract Storage<T>(StorageDef<T>) from StorageDef<T> to StorageDef<T>{
@@ -12,8 +12,8 @@ abstract Storage<T>(StorageDef<T>) from StorageDef<T> to StorageDef<T>{
   private var self(get,never):Storage<T>;
   private function get_self():Storage<T> return lift(this);
 
-  // public function create():Res<Register,HalvaFailure>{}
-  // public function update(r:Register,data:Account<T>):Res<Register,HalvaFailure>;
+  // public function create():Upshot<Register,HalvaFailure>{}
+  // public function update(r:Register,data:Account<T>):Upshot<Register,HalvaFailure>;
   // public function redeem(r:Register,threshold:ThresholdSet<T>):Pledge<Account<T>,HalvaFailure>;
 //  public function listen(r:Register,threshold:ThresholdSet<T>):Signal<Account<T>>;
 }
