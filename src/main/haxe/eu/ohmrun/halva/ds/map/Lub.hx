@@ -1,12 +1,12 @@
 package eu.ohmrun.halva.ds.map;
 
 class Lub<K,V> extends SemiGroupCls<LVar<RedBlackMap<K,V>>>{
-  final map     : Comparable<LVar<RedBlackMap<K,V>>>;
-  final value   : Comparable<V>;
-  public function new(map,value){
+  final K       : Comparable<LVar<RedBlackMap<K,V>>>;
+  final V       : Comparable<V>;
+  public function new(K,V){
     super();
-    this.map    = map;
-    this.value  = value;
+    this.K    = K;
+    this.V    = V;
   }
   public function plus(lhs:LVar<RedBlackMap<K,V>>,rhs:LVar<RedBlackMap<K,V>>){
     return lhs.is_defined().if_else(
