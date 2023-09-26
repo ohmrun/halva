@@ -1,6 +1,6 @@
 package eu.ohmrun.halva.ds.map;
 
-class Lub<K,V> extends SemiGroupCls<LVar<RedBlackMap<K,V>>>{
+class Lub<K,V> extends stx.fp.SemiGroup.SemiGroupCls<LVar<RedBlackMap<K,V>>>{
   final K       : Comparable<LVar<RedBlackMap<K,V>>>;
   final V       : Comparable<V>;
   public function new(K,V){
@@ -28,7 +28,7 @@ class Lub<K,V> extends SemiGroupCls<LVar<RedBlackMap<K,V>>>{
               switch([l,r]){
                 case [Some(lI),Some(rI)] : 
                   trace('$lI,$rI');
-                  if(value.lt().comply(rI,lI).is_less_than()){
+                  if(V.lt().comply(rI,lI).is_less_than()){
                     do_fail();
                   }  
                 case [Some(_),None] : 
